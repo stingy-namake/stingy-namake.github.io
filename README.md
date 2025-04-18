@@ -1,1 +1,0 @@
-# stingy-namake.github.io
