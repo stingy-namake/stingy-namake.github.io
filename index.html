@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> stingy-namake's website </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+	<div class="container">
+
+		<header>
+			<span>stingy怠け</span>
+		</header>
+		
+		<div class="small">
+			<nav>
+				<div>My links</div>
+                <a href="https://github.com/stingy-namake">GitHub</a>
+				<a href="https://github.com/stingy-namake/workspace">College</a>
+				<a href="https://github.com/stingy-namake/stingy-namake.github.io"><i>This</i> repo</a>
+				<a href="https://github.com/stingy-namake/workspace/tree/main/c_cpp">Learning C/C++</a>
+			</nav>
+			<!-- optional spot for styled button outside the navigation box -->
+			<img src="">
+		</div>
+		
+		<section class="half">
+
+        </section>
+				
+		<section class="small">
+			<h2>About Me</h2>
+		    <p>Hi. I'm in the 3rd semester of <a href="https://en.wikipedia.org/wiki/Bachelor_of_Information_Systems">Information Systems</a> (BIS). I like programming, math, physics and science in general. This website was created for 2 reasons: </p>
+            <ol style="list-style: decimal;">
+                <li>Fun</li>
+                <li>Some web-related-learning</li>
+            </ol>
+		</section>
+		
+		<section class="full" id="rcipo">
+            <h2>RCIPO (Recent Code I'm Proud Of):</h2>
+<pre><code class="prettyprint lang-cpp linenums:13">
+int binaryToDecimal (long num) {
+    long result = 0;
+    char current;
+    std::string num_str = std::to_string(num);
+                        
+    for (int i = 0; i < num_str.length(); i++) { 
+        result += ((int) num_str[num_str.length() - i - 1] - '0') * pow(2, i);
+    }
+
+    return result;
+}
+
+</code></pre>
+		</section>
+<!--
+		<section class="half">
+			<h2></h2>
+		</section>
+		
+		<section class="half">
+			<h2>half width section</h2>
+		</section>
+-->
+	</div>
+
+	<footer>
+		<span>cyanobacteria.css by <a href="https://ribo.zone/free/layouts/">ribo.zone</a> &lt;- (this person is cool as hell!)</span>
+	</footer>
+
+</body>
+</html>
