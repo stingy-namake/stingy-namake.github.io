@@ -1,2 +1,242 @@
-Hello World, It's working.
-Now I have tags too.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev // Inherited Will</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0a0a0c;
+            --accent-color: #00ff9d; 
+            --text-main: #e0e0e0;
+            --text-dim: #666;
+            --border-style: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Space Grotesk', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        /* Scanline Overlay */
+        body::before {
+            content: " ";
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+            z-index: 10;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            display: grid;
+            grid-template-columns: 1.2fr 2fr;
+            gap: 60px;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Sidebar Info */
+        .profile-side {
+            border-left: 2px solid var(--accent-color);
+            padding-left: 30px;
+        }
+
+        .anime-header-img {
+            width: 100%;
+            max-width: 200px;
+            filter: grayscale(1) brightness(1.2);
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            line-height: 0.85;
+            margin-bottom: 15px;
+        }
+
+        .status {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent-color);
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        .bio-text {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .quote-box {
+            font-style: italic;
+            border-left: 1px solid var(--text-dim);
+            padding-left: 15px;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        h3 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h3::after {
+            content: "";
+            height: 1px;
+            flex-grow: 1;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .tech-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tech-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 5px 12px;
+            border: var(--border-style);
+            background: rgba(255,255,255,0.03);
+            transition: 0.3s;
+        }
+
+        .tech-tag:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .about-list {
+            list-style: none;
+        }
+
+        .about-list li {
+            margin-bottom: 12px;
+            font-size: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .about-list li::before {
+            content: ">";
+            color: var(--accent-color);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .footer-nav {
+            margin-top: auto;
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            border-bottom: 1px solid transparent;
+            transition: 0.3s;
+        }
+
+        .footer-nav a:hover {
+            color: var(--accent-color);
+            border-bottom: 1px solid var(--accent-color);
+        }
+
+        @media (max-width: 850px) {
+            .container { grid-template-columns: 1fr; }
+            body { overflow-y: auto; height: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <section class="profile-side">
+            <img src="https://github.com/user-attachments/assets/3ddce9c6-2103-4d5e-8e90-fb715cc6cdb6" class="anime-header-img" alt="One Piece">
+            <h1>INFO<br>SYSTEMS<br>MAJOR</h1>
+            <span class="status">// OS: ARCH_LINUX_X86_64</span>
+            
+            <p class="bio-text">
+                Developer currently mastering <strong>Machine Learning</strong> and <strong>Data Analysis</strong>. 
+                I believe math is the language of the universe and code is my dialect.
+            </p>
+
+            <div class="quote-box">
+                "Inherited will, the destiny of the age, and the dreams of the people. These are things that will not stop."
+                <br><br>— Gol D. Roger
+            </div>
+        </section>
+
+        <section class="main-content">
+            
+            <div>
+                <h3>⚡ Mission Logs</h3>
+                <ul class="about-list">
+                    <li>Currently studying Machine Learning & Data Analysis</li>
+                    <li>Seeking internship in software development</li>
+                    <li>Deeply interested in Mathematics & Physics</li>
+                    <li>Ask me about Linux, Anime, or why I have 100+ tabs open</li>
+                </ul>
+            </div>
+
+            <div>
+                <h3>📊 Tech Stack</h3>
+                <div class="tech-grid">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">C</span>
+                    <span class="tech-tag">PHP</span>
+                    <span class="tech-tag">Laravel</span>
+                    <span class="tech-tag">React</span>
+                    <span class="tech-tag">Kotlin</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">R</span>
+                    <span class="tech-tag">Arch Linux</span>
+                </div>
+            </div>
+
+            <nav class="footer-nav">
+                <a href="#">LINKEDIN</a>
+                <a href="mailto:email.escolar174@gmail.com">EMAIL</a>
+                <a href="#">GITHUB</a>
+            </nav>
+        </section>
+    </div>
+
+</body>
+</html>
