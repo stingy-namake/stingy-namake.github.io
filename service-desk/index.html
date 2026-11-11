@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Protótipo acadêmico de Service Desk e dashboard de indicadores do IPEC.">
+  <title>IPEC · Service Desk</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B1F3A'/%3E%3Cpath d='M18 18h28v8H34v20h-8V26h-8z' fill='%2314B8A6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/estilo.css">
+</head>
+<body>
+  <a class="pular-para-conteudo" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="app">
+    <aside class="sidebar">
+      <div class="marca">
+        <div class="marca-logo" aria-hidden="true">IPEC</div>
+        <div class="marca-texto">
+          <strong>IPEC</strong>
+          <span>Service Desk</span>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Navegação principal">
+        <button class="nav-item ativo" type="button" data-action="nav" data-view="dashboard">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-item" type="button" data-action="nav" data-view="chamados">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4z"/><path d="M14 5v14" stroke-dasharray="2 3"/></svg>
+          <span>Chamados</span>
+        </button>
+        <button class="nav-item" type="button" data-action="nav" data-view="novo">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          <span>Novo chamado</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-rodape">
+        <span class="ponto-simulado"></span>
+        <div>
+          <strong>Dados simulados</strong>
+          <span>Base de outubro/2026 · 420 chamados</span>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <div class="topbar-contexto">
+          <span class="topbar-marca-mobile" aria-hidden="true">IPEC</span>
+          <span class="topbar-rotulo">Central de Serviços</span>
+          <span class="topbar-sep" aria-hidden="true">/</span>
+          <span id="topbar-view">Dashboard</span>
+        </div>
+
+        <div class="topbar-acoes">
+          <div class="relogio-demo" id="relogio-demo" title="Relógio fixo da demonstração; use 'Simular +3h' no chamado para testar o alerta de 75%."></div>
+          <button class="btn-icone btn-reset" type="button" data-action="resetar" title="Restaurar demonstração" aria-label="Restaurar demonstração">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+            <span>Restaurar</span>
+          </button>
+          <div id="notificacoes-root" class="notificacoes"></div>
+          <div class="usuario" title="Perfil da demonstração">
+            <span class="avatar" aria-hidden="true">CO</span>
+            <span class="usuario-texto"><strong>Coordenação de TI</strong><span>COO</span></span>
+          </div>
+        </div>
+      </header>
+
+      <main class="conteudo" id="conteudo">
+        <section class="view" id="view-dashboard" aria-labelledby="titulo-dashboard"></section>
+        <section class="view" id="view-chamados" aria-labelledby="titulo-chamados" hidden></section>
+        <section class="view" id="view-novo" aria-labelledby="titulo-novo" hidden></section>
+      </main>
+    </div>
+  </div>
+
+  <div id="drawer-root"></div>
+  <div id="toast-root" class="toast-root" aria-live="polite" aria-atomic="true"></div>
+
+  <noscript>
+    <div class="aviso-noscript">Este protótipo precisa de JavaScript ativado para funcionar.</div>
+  </noscript>
+
+  <script src="assets/dados.js"></script>
+  <script src="assets/app.js" defer></script>
+</body>
+</html>
