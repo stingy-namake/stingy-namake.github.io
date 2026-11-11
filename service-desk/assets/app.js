@@ -9,6 +9,7 @@
   const BASE = Array.isArray(window.IPEC_BASE) ? window.IPEC_BASE : [];
   const BASE_META = window.IPEC_BASE_META || {};
   const STORAGE_KEY = 'ipec-service-desk-v1';
+  const TEMA_KEY = 'ipec-tema';
   const RELOGIO_DEMO = new Date('2026-11-10T09:00:00');
   const POR_PAGINA = 15;
 
@@ -75,7 +76,8 @@
     escalonando: false,
     resolvendo: false,
     notificacoesAbertas: false,
-    ultimoFoco: null
+    ultimoFoco: null,
+    tema: document.documentElement.dataset.tema === 'escuro' ? 'escuro' : 'claro'
   };
 
   /* ---------------- utilidades ---------------- */
@@ -128,6 +130,22 @@
 
   function agoraDemo() {
     return new Date(RELOGIO_DEMO.getTime() + state.demoOffsetMin * 60000);
+  }
+
+  function atualizarBotaoTema() {
+    const botao = document.getElementById('btn-tema');
+    if (!botao) return;
+    const escuro = state.tema === 'escuro';
+    botao.setAttribute('aria-pressed', String(escuro));
+    botao.setAttribute('aria-label', escuro ? 'Ativar tema claro' : 'Ativar tema escuro');
+    botao.title = escuro ? 'Tema escuro ativo — mudar para claro' : 'Tema claro ativo — mudar para escuro';
+  }
+
+  function aplicarTema(tema) {
+    state.tema = tema === 'escuro' ? 'escuro' : 'claro';
+    document.documentElement.dataset.tema = state.tema;
+    try { localStorage.setItem(TEMA_KEY, state.tema); } catch (erro) { /* armazenamento indisponível */ }
+    atualizarBotaoTema();
   }
 
   function horasEntre(inicioIso, fimIso) {
@@ -462,7 +480,7 @@
   function kpiCard(opcoes) {
     const progresso = Math.min(100, Math.max(0, opcoes.progresso || 0));
     const tone = opcoes.tone || 'perigo';
-    return '<article class="kpi-card" style="--cor-kpi:' + (tone === 'perigo' ? '#b91c1c' : tone === 'alerta' ? '#d97706' : '#0f766e') + '">' +
+    return '<article class="kpi-card" style="--cor-kpi:' + (tone === 'perigo' ? 'var(--kpi-perigo)' : tone === 'alerta' ? 'var(--kpi-alerta)' : 'var(--kpi-ok)') + '">' +
       '<div class="kpi-topo"><span class="kpi-rotulo">' + esc(opcoes.rotulo) + '</span><span class="kpi-icone">' + (ICONES[opcoes.icone] || ICONES.alvo) + '</span></div>' +
       '<div class="kpi-valor">' + opcoes.valor + (opcoes.unidade ? ' <small>' + esc(opcoes.unidade) + '</small>' : '') + '</div>' +
       '<div class="kpi-meta"><span>Meta <strong>' + esc(opcoes.meta) + '</strong></span><span>' + fmtInt(progresso) + '% da meta</span></div>' +
@@ -504,7 +522,7 @@
     let grade = '';
     [0, 25, 50, 75, 100].forEach(function (v) {
       const y = baseY - (v / 100) * plotH;
-      grade += '<line x1="' + esquerda + '" y1="' + y + '" x2="' + (largura - direita) + '" y2="' + y + '" stroke="#e2e8f0" stroke-width="1"></line>' +
+      grade += '<line x1="' + esquerda + '" y1="' + y + '" x2="' + (largura - direita) + '" y2="' + y + '" class="chart-grade" stroke="#e2e8f0" stroke-width="1"></line>' +
         '<text x="' + (esquerda - 6) + '" y="' + (y + 3) + '" text-anchor="end" font-size="8" fill="#94a3b8">' + v + '%</text>';
     });
     const passo = plotW / dados.length;
@@ -521,8 +539,8 @@
         '<text x="' + (x + barW / 2) + '" y="' + (baseY + 26) + '" text-anchor="middle" font-size="7.5" fill="#94a3b8">' + d.dentro + '/' + d.encerrados + '</text>';
     });
     const targetY = baseY - 0.8 * plotH;
-    const meta = '<line x1="' + esquerda + '" y1="' + targetY + '" x2="' + (largura - direita) + '" y2="' + targetY + '" stroke="#b91c1c" stroke-width="1.2" stroke-dasharray="4 4"></line>' +
-      '<text x="' + (largura - direita) + '" y="' + (targetY - 4) + '" text-anchor="end" font-size="8" font-weight="700" fill="#b91c1c">meta 80%</text>';
+    const meta = '<line x1="' + esquerda + '" y1="' + targetY + '" x2="' + (largura - direita) + '" y2="' + targetY + '" class="chart-meta" stroke="#b91c1c" stroke-width="1.2" stroke-dasharray="4 4"></line>' +
+      '<text x="' + (largura - direita) + '" y="' + (targetY - 4) + '" text-anchor="end" font-size="8" font-weight="700" fill="#b91c1c" class="chart-text-meta">meta 80%</text>';
     return '<svg class="chart-svg" viewBox="0 0 ' + largura + ' ' + altura + '" role="img" aria-label="Cumprimento do SLA por prioridade">' + grade + meta + barras + '</svg>';
   }
 
@@ -537,7 +555,7 @@
     let grade = '';
     [0, Math.ceil(maximo / 2), maximo].forEach(function (v) {
       const y = baseY - (v / maximo) * plotH;
-      grade += '<line x1="' + esquerda + '" y1="' + y + '" x2="' + (largura - direita) + '" y2="' + y + '" stroke="#e2e8f0" stroke-width="1"></line>' +
+      grade += '<line x1="' + esquerda + '" y1="' + y + '" x2="' + (largura - direita) + '" y2="' + y + '" class="chart-grade" stroke="#e2e8f0" stroke-width="1"></line>' +
         '<text x="' + (esquerda - 6) + '" y="' + (y + 3) + '" text-anchor="end" font-size="8" fill="#94a3b8">' + v + '</text>';
     });
     let barras = '';
@@ -1161,6 +1179,9 @@
       case 'resetar':
         resetarDemo();
         break;
+      case 'tema':
+        aplicarTema(state.tema === 'escuro' ? 'claro' : 'escuro');
+        break;
       case 'detalhe':
         abrirDetalhe(alvo.dataset.id);
         break;
@@ -1307,6 +1328,7 @@
     }
     carregarEstado();
     verificarAlertas();
+    atualizarBotaoTema();
     render();
     console.info('IPEC Service Desk: ' + BASE.length + ' chamados na base; ' + state.sessao.length + ' na sessão de demonstração.');
   }
